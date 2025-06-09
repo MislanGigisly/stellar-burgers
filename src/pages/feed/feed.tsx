@@ -36,7 +36,7 @@ export const Feed: FC = () => {
     <FeedUI
       orders={orders}
       handleGetFeeds={() => {
-        handleGetFeeds;
+        handleGetFeeds();
       }}
     />
   ); // добавил return
