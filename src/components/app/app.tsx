@@ -21,6 +21,7 @@ import {
   getLoading,
   getData
 } from '../../services/slices/ingredientsSlice';
+import { getUser } from '../../services/slices/userSlice';
 import { useEffect } from 'react';
 
 const App = () => {
@@ -32,6 +33,7 @@ const App = () => {
 
   useEffect(() => {
     disp(getIngredientsThunk());
+    disp(getUser());
   }, [disp]);
 
   const location = useLocation();
@@ -92,6 +94,23 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route path='/feed/:number' element={<OrderInfo />} />
+        <Route
+          path='/ingredients/:id'
+          element={
+            <div className={styles.detailPageWrap}>
+              <IngredientDetails />
+            </div>
+          }
+        />
+        <Route
+          path='/profile/orders/:number'
+          element={
+            <ProtectedRoute>
+              <OrderInfo />
+            </ProtectedRoute>
+          }
+        />
         <Route path='*' element={<NotFound404 />} />
       </Routes>
 
@@ -100,16 +119,14 @@ const App = () => {
           <Route
             path='/feed/:number'
             element={
-              <ProtectedRoute>
-                <Modal
-                  title='Информация о закезе'
-                  onClose={() => {
-                    navigate(-1);
-                  }}
-                >
-                  <OrderInfo />
-                </Modal>
-              </ProtectedRoute>
+              <Modal
+                title='Информация о закезе'
+                onClose={() => {
+                  navigate(-1);
+                }}
+              >
+                <OrderInfo />
+              </Modal>
             }
           />
           <Route
