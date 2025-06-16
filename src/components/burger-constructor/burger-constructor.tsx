@@ -6,12 +6,12 @@ import {
   orderItemSelector,
   resetOrderItem,
   orderBurger
-} from '../../services/slices/orderSlice';
+} from '../../services/slices/orderSlice/orderSlice';
 import {
   getConstructorItems,
   resetConstructor
-} from '../../services/slices/constractorSlice';
-import { isAuthSelector } from '../../services/slices/userSlice';
+} from '../../services/slices/constractorSlice/constractorSlice';
+import { isAuthSelector } from '../../services/slices/userSlice/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../services/store';
 

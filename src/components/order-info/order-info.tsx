@@ -7,8 +7,8 @@ import {
   getOrderByNumber,
   orderItemSelector,
   resetOrderItem
-} from '../../services/slices/orderSlice';
-import { getData } from '../../services/slices/ingredientsSlice';
+} from '../../services/slices/orderSlice/orderSlice';
+import { getData } from '../../services/slices/ingredientsSlice/ingredientsSlice';
 import { useParams } from 'react-router-dom';
 
 export const OrderInfo: FC = () => {

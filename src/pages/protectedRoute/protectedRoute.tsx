@@ -5,7 +5,7 @@ import { useSelector } from '../../services/store';
 import {
   isAuthCheckedSelector,
   userSelector
-} from '../../services/slices/userSlice';
+} from '../../services/slices/userSlice/userSlice';
 
 type ProtectedRouteProps = {
   onlyUnAuth?: boolean;

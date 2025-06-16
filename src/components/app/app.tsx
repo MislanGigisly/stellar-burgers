@@ -20,8 +20,8 @@ import {
   getIngredientsThunk,
   getLoading,
   getData
-} from '../../services/slices/ingredientsSlice';
-import { getUser } from '../../services/slices/userSlice';
+} from '../../services/slices/ingredientsSlice/ingredientsSlice';
+import { getUser } from '../../services/slices/userSlice/userSlice';
 import { useEffect } from 'react';
 
 const App = () => {

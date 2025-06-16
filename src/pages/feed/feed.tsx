@@ -8,7 +8,7 @@ import {
   feedSelector,
   resetFeeds,
   getFeeds
-} from '../../services/slices/feedSlice';
+} from '../../services/slices/feedSlice/feedSlice';
 
 export const Feed: FC = () => {
   /** TODO: взять переменную из стора */

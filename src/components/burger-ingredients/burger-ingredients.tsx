@@ -6,7 +6,7 @@ import {
   getBuns,
   getMains,
   getSauces
-} from '../../services/slices/ingredientsSlice';
+} from '../../services/slices/ingredientsSlice/ingredientsSlice';
 import { useSelector } from '../../services/store';
 
 export const BurgerIngredients: FC = () => {

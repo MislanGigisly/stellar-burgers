@@ -3,8 +3,8 @@ import {
   createAsyncThunk,
   createSelector
 } from '@reduxjs/toolkit';
-import { getIngredientsApi } from '../../utils/burger-api';
-import { TIngredient } from '../../utils/types';
+import { getIngredientsApi } from '../../../utils/burger-api';
+import { TIngredient } from '../../../utils/types';
 
 export const getIngredientsThunk = createAsyncThunk(
   'ingredientsThunk',
@@ -18,7 +18,7 @@ export interface Ingredient {
   error: undefined | string;
 }
 
-const initialState: Ingredient = {
+export const initialState: Ingredient = {
   success: false,
   data: [],
   isLoading: true,
@@ -34,7 +34,7 @@ export const ingredientsSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(getIngredientsThunk.rejected, (state, error) => {
-      state.isLoading = true;
+      state.isLoading = false;
       console.log('ошибка:', error.error.message);
       state.error = error.error?.message;
     });

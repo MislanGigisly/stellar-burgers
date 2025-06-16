@@ -1,12 +1,12 @@
 import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
-import { TConstructorIngredient, TIngredient } from '../../utils/types';
+import { TConstructorIngredient, TIngredient } from '../../../utils/types';
 
-interface RightSideOFMainInterface {
+export interface RightSideOFMainInterface {
   ingredients: TConstructorIngredient[];
   bun: TIngredient | null;
 }
 
-const initialState: RightSideOFMainInterface = {
+export const initialState: RightSideOFMainInterface = {
   ingredients: [],
   bun: null
 };
@@ -23,7 +23,7 @@ export const constructorSlice = createSlice({
         state.ingredients.push(action.payload);
       },
       prepare: (ingredient: TIngredient) => ({
-        payload: { ...ingredient, key: nanoid() }
+        payload: { ...ingredient, key: ingredient._id }
       })
     },
     changePositionIngredients: (state, action) => {
