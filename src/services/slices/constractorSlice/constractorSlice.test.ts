@@ -55,10 +55,13 @@ describe('constructorSlice', () => {
   };
 
   it('Добавление ингридиентов', () => {
-    const state = constructorSliceReducer(initialState, addIngredient(ingredient_1));
+    const action = { type: addIngredient.type, payload: { ...ingredient_1, key: "2" } }
+    const state = constructorSliceReducer(initialState, action);
     expect(state.ingredients).toHaveLength(1);
     expect(state.ingredients[0]).toEqual(ingredient_1);
   });
+
+  
 
   it('Добавление булок', () => {
     const state = constructorSliceReducer(initialState, addBun(bun));

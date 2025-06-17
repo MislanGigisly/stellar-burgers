@@ -23,7 +23,7 @@ export const constructorSlice = createSlice({
         state.ingredients.push(action.payload);
       },
       prepare: (ingredient: TIngredient) => ({
-        payload: { ...ingredient, key: ingredient._id }
+        payload: { ...ingredient, key: nanoid() }
       })
     },
     changePositionIngredients: (state, action) => {
