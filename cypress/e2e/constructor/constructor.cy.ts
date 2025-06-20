@@ -29,28 +29,30 @@ describe('Работы модального окна', function () {
   beforeEach(function () {
     cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients' });
     cy.viewport(1280, 720);
-    cy.visit('http://localhost:4000'); 
+    cy.visit('')
   });
 
+  Cypress.env('ingInfo', 'Информация о ингредиенте')
+
   it('Открытие модального окна ингредиента', () => {
-    cy.contains('Информация о ингредиенте').should('not.exist');
+    cy.contains(Cypress.env('ingInfo')).should('not.exist');
     cy.contains('Булка').click();
-    cy.contains('Информация о ингредиенте').should('exist');
+    cy.contains(Cypress.env('ingInfo')).should('exist');
     cy.get('#modals').contains('Булка').should('exist');
   });
 
   it('Закрытие по клику на крестик', () => {
     cy.contains('Булка').click();
-    cy.contains('Информация о ингредиенте').should('exist');
+    cy.contains(Cypress.env('ingInfo')).should('exist');
     cy.get('[data-cy=close_modal_Ingregient]').click();
-    cy.contains('Информация о ингредиенте').should('not.exist');
+    cy.contains(Cypress.env('ingInfo')).should('not.exist');
   });
 
   it('Закрытие по клику на оверлей', () => {
     cy.contains('Булка').click();
-    cy.contains('Информация о ингредиенте').should('exist');
+    cy.contains(Cypress.env('ingInfo')).should('exist');
     cy.get('[data-cy=modal-overlay]').click('right', { force: true });
-    cy.contains('Информация о ингредиенте').should('not.exist');
+    cy.contains(Cypress.env('ingInfo')).should('not.exist');
   });
 });
 
@@ -68,7 +70,7 @@ describe('Создание заказа', function () {
     );
     cy.setCookie('accessToken', 'test-accessToken');
     cy.viewport(1280, 720);
-    cy.visit('http://localhost:4000');
+    cy.visit('');
   });
 
   afterEach(function () {
