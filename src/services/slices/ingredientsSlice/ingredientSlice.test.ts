@@ -1,3 +1,4 @@
+import { Action } from '@reduxjs/toolkit';
 import ingredientsReducer, {
   initialState,
   getIngredientsThunk
@@ -33,6 +34,9 @@ describe('ingredientSlice', () => {
   };
   const ingredientsList = [ingredient_1, ingredient_2];
 
+  const mockstate = (action: Action) =>
+    ingredientsReducer(initialState, action);
+
   it('Проветка изначального состояния', () => {
     expect(ingredientsReducer(undefined, { type: 'UNKNOWN_ACTION' })).toEqual(
       initialState
@@ -41,7 +45,7 @@ describe('ingredientSlice', () => {
 
   it('Попытка вызова ингредиента', () => {
     const action = { type: getIngredientsThunk.pending.type };
-    const state = ingredientsReducer(initialState, action);
+    const state = mockstate(action);
     expect(state.isLoading).toBe(true);
     expect(state.error).toBe(undefined);
     expect(state.data).toEqual([]);
@@ -52,7 +56,7 @@ describe('ingredientSlice', () => {
       type: getIngredientsThunk.rejected.type,
       error: { message: 'Error fetching ingredients' }
     };
-    const state = ingredientsReducer(initialState, action);
+    const state = mockstate(action);
     expect(state.isLoading).toBe(false);
     expect(state.error).toBe('Error fetching ingredients');
     expect(state.data).toEqual([]);
@@ -63,7 +67,7 @@ describe('ingredientSlice', () => {
       type: getIngredientsThunk.fulfilled.type,
       payload: ingredientsList
     };
-    const state = ingredientsReducer(initialState, action);
+    const state = mockstate(action);
     expect(state.data).toEqual(ingredientsList);
     expect(state.isLoading).toBe(false);
     expect(state.error).toBe(undefined);

@@ -1,3 +1,4 @@
+import { Action } from '@reduxjs/toolkit';
 import orderReducer, {
   orderBurger,
   getOrders,
@@ -28,6 +29,8 @@ describe('orderSlice', () => {
     ingredients: ['ingredient_1', 'ingredient_2']
   };
 
+  const mockstate = (action: Action) => orderReducer(initialState, action);
+
   it('Проверка начального состояния', () => {
     expect(orderReducer(undefined, { type: 'UNKNOWN_ACTION' })).toEqual(
       initialState
@@ -51,7 +54,7 @@ describe('orderSlice', () => {
   describe('отправка заказа', () => {
     it('should handle orderBurger.pending', () => {
       const action = orderBurger.pending.type;
-      const state = orderReducer(initialState, { type: action });
+      const state = mockstate({ type: action });
       expect(state.loading).toBe(true);
       expect(state.error).toBe(null);
     });
@@ -61,7 +64,7 @@ describe('orderSlice', () => {
         type: orderBurger.rejected.type,
         error: { message: 'Error fetching' }
       };
-      const state = orderReducer(initialState, action);
+      const state = mockstate(action);
       expect(state.loading).toBe(false);
       expect(state.error).toBe('Error fetching');
     });
@@ -76,7 +79,7 @@ describe('orderSlice', () => {
         type: orderBurger.fulfilled.type,
         payload: orderBurgerResponse
       };
-      const state = orderReducer(initialState, action);
+      const state = mockstate(action);
       expect(state.loading).toBe(false);
       expect(state.name).toBe(orderBurgerResponse.name);
       expect(state.orderItem).toEqual(orderBurgerResponse.order);
@@ -86,7 +89,7 @@ describe('orderSlice', () => {
   describe('Получение заказов', () => {
     it('should handle getOrders.pending', () => {
       const action = getOrders.pending.type;
-      const state = orderReducer(initialState, { type: action });
+      const state = mockstate({ type: action });
       expect(state).toBe(initialState);
     });
 
@@ -95,14 +98,14 @@ describe('orderSlice', () => {
         type: getOrders.rejected.type,
         error: { message: 'Error fetching' }
       };
-      const state = orderReducer(initialState, action);
+      const state = mockstate(action);
       expect(state.error).toBe('Error fetching');
     });
 
     it('Удачно полученные заказы', () => {
       const orderResponse = [order_1];
       const action = getOrders.fulfilled(orderResponse, '');
-      const state = orderReducer(initialState, action);
+      const state = mockstate(action);
       expect(state.orders).toHaveLength(1);
       expect(state.orders).toEqual(orderResponse);
     });
@@ -111,7 +114,7 @@ describe('orderSlice', () => {
   describe('Заказы по id', () => {
     it('should handle getOrderByNumber.pending', () => {
       const action = getOrderByNumber.pending.type;
-      const state = orderReducer(initialState, { type: action });
+      const state = mockstate({ type: action });
       expect(state.loading).toBe(true);
       expect(state.error).toBe(null);
     });
@@ -121,7 +124,7 @@ describe('orderSlice', () => {
         type: getOrderByNumber.rejected.type,
         error: { message: 'Error fetching' }
       };
-      const state = orderReducer(initialState, action);
+      const state = mockstate(action);
       expect(state.loading).toBe(false);
       expect(state.error).toBe('Error fetching');
     });
@@ -130,10 +133,10 @@ describe('orderSlice', () => {
       const orders = [order_1, order_2];
       const orderResponse = {
         success: true,
-        orders: [order_1]
+        orders: orders
       };
       const action = getOrderByNumber.fulfilled(orderResponse, '', 1);
-      const state = orderReducer(initialState, action);
+      const state = mockstate(action);
       expect(state.orderItem).toEqual(orderResponse.orders[0]);
       expect(state.loading).toBe(false);
     });

@@ -1,10 +1,12 @@
+import cypress from "cypress";
+
 describe('Добавление ингредиентов в конструктор', function () {
   beforeEach(function () {
     cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients' });
     cy.viewport(1280, 720);
-    cy.visit('http://localhost:4000');
+    cy.visit('');
   });
-
+  
   it('Добавление булок', () => {
     cy.get('[data-cy=1]').contains('Добавить').click();
     cy.get('[data-cy=constructor-bun-1]').contains('Булка').should('exist');
@@ -85,10 +87,10 @@ describe('Создание заказа', function () {
       .should('deep.equal', {
         ingredients: ['1', '2', '4', '1']
       });
-
-    cy.get('[data-cy=order-num]').contains('79603').should('exist');
+    cy.get('[data-cy=order-num]').as('ordNum')
+    cy.get('@ordNum').contains('79603').should('exist');
     cy.get('[data-cy=close_modal_Ingregient]').click();
-    cy.get('[data-cy=order-num]').should('not.exist');
+    cy.get('@ordNum').should('not.exist');
   });
 
   it('Проверbить, что конструктор пуст', () => {

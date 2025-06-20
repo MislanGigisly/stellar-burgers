@@ -40,6 +40,21 @@ describe('constructorSlice', () => {
     image_large: 'https://code.s3.yandex.net/react/code/sauce-02-large.png'
   };
 
+  const ingredient_3: TConstructorIngredient = {
+    _id: '3',
+    key: '3',
+    name: 'Мясо моллюсков',
+    type: 'main',
+    proteins: 433,
+    fat: 244,
+    carbohydrates: 33,
+    calories: 420,
+    price: 1337,
+    image: 'https://code.s3.yandex.net/react/code/meat-02.png',
+    image_mobile: 'https://code.s3.yandex.net/react/code/meat-02-mobile.png',
+    image_large: 'https://code.s3.yandex.net/react/code/meat-02-large.png'
+  };
+
   const bun: TIngredient = {
     _id: '1',
     name: 'Булка',
@@ -54,14 +69,22 @@ describe('constructorSlice', () => {
     image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png'
   };
 
-  it('Добавление ингридиентов', () => {
-    const action = { type: addIngredient.type, payload: { ...ingredient_1, key: "2" } }
-    const state = constructorSliceReducer(initialState, action);
-    expect(state.ingredients).toHaveLength(1);
-    expect(state.ingredients[0]).toEqual(ingredient_1);
-  });
+  const initialState: RightSideOFMainInterface = {
+    bun: null,
+    ingredients: [ingredient_1, ingredient_2]
+  };
 
-  
+  it('Добавление ингридиентов', () => {
+    const action = {
+      type: addIngredient.type,
+      payload: { ...ingredient_3, key: '3' }
+    };
+    const state = constructorSliceReducer(initialState, action);
+    expect(state.ingredients).toHaveLength(3);
+    expect(
+      state.ingredients.find((ing) => ing.name === 'Мясо моллюсков')
+    ).toEqual(ingredient_3);
+  });
 
   it('Добавление булок', () => {
     const state = constructorSliceReducer(initialState, addBun(bun));
@@ -69,22 +92,14 @@ describe('constructorSlice', () => {
   });
 
   it('Удаление ингридиентов', () => {
-    const initialState: RightSideOFMainInterface = {
-      bun: null,
-      ingredients: [ingredient_1]
-    };
     const state = constructorSliceReducer(
       initialState,
       removeIngredient(ingredient_1._id)
     );
-    expect(state.ingredients).toHaveLength(0);
+    expect(state.ingredients).toHaveLength(1);
   });
 
   it('Изменение положения ингредиентов в конструкторе', () => {
-    const initialState: RightSideOFMainInterface = {
-      bun: null,
-      ingredients: [ingredient_1, ingredient_2]
-    };
     const state = constructorSliceReducer(
       initialState,
       changePositionIngredients({ from: 1, to: 0 })
@@ -97,10 +112,6 @@ describe('constructorSlice', () => {
   });
 
   it('Очистка конструктора', () => {
-    const initialState: RightSideOFMainInterface = {
-      bun: bun,
-      ingredients: [ingredient_1, ingredient_2]
-    };
     const state = constructorSliceReducer(initialState, resetConstructor());
     expect(state).toEqual({ bun: null, ingredients: [] });
   });

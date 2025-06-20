@@ -1,8 +1,18 @@
-import { initialState as ingredientsReducer, ingredientsSlice } from '../services/slices/ingredientsSlice/ingredientsSlice';
-import { initialState as constructorReducer, constructorSlice } from '../services/slices/constractorSlice/constractorSlice';
+import {
+  initialState as ingredientsReducer,
+  ingredientsSlice
+} from '../services/slices/ingredientsSlice/ingredientsSlice';
+import {
+  initialState as constructorReducer,
+  constructorSlice
+} from '../services/slices/constractorSlice/constractorSlice';
 import { initialState as orderReducer } from '../services/slices/orderSlice/orderSlice';
 import { initialState as feedReducer } from '../services/slices/feedSlice/feedSlice';
-import { initialState as userReducer, userSelector, userSlice } from '../services/slices/userSlice/userSlice';
+import {
+  initialState as userReducer,
+  userSelector,
+  userSlice
+} from '../services/slices/userSlice/userSlice';
 import store from './store';
 
 const initialState = {
@@ -13,6 +23,7 @@ const initialState = {
   userSlice: userReducer
 };
 
+const state = store.getState();
 describe('rootReducer', () => {
   it('should initialize', () => {
     const state = store.getState();

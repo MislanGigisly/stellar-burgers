@@ -1,25 +1,27 @@
+import { preProcessFile } from 'typescript';
 import feedReducer, { getFeeds, initialState, resetFeeds } from './feedSlice';
 import { TOrder } from '@utils-types';
 
+const previousState = {
+  orders: [
+    {
+      _id: '1',
+      status: 'pending',
+      name: 'orde',
+      createdAt: '2025-05-31',
+      updatedAt: '2025-05-30',
+      number: 1,
+      ingredients: ['ingredient_1', 'ingredient_2']
+    }
+  ],
+  total: 1,
+  totalToday: 1,
+  loading: true,
+  error: 'Some error'
+};
+
 describe('feedSlice', () => {
   it('обновить заказы', () => {
-    const previousState = {
-      orders: [
-        {
-          _id: '1',
-          status: 'pending',
-          name: 'orde',
-          createdAt: '2025-05-31',
-          updatedAt: '2025-05-30',
-          number: 1,
-          ingredients: ['ingredient_1', 'ingredient_2']
-        }
-      ],
-      total: 1,
-      totalToday: 1,
-      loading: true,
-      error: 'Some error'
-    };
     expect(feedReducer(previousState, resetFeeds())).toEqual(initialState);
   });
 });
@@ -43,17 +45,7 @@ describe('async actions', () => {
   });
 
   it('Проверить получение всех заказов', () => {
-    const orders: TOrder[] = [
-      {
-        _id: '1',
-        status: 'done',
-        name: 'Бургер',
-        createdAt: '2025-05-31',
-        updatedAt: '2025-05-30',
-        number: 1,
-        ingredients: ['ingredient_1', 'ingredient_2']
-      }
-    ];
+    const orders: TOrder[] = previousState.orders;
     const total = 1;
     const totalToday = 1;
 

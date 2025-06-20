@@ -1,3 +1,4 @@
+import { Action } from '@reduxjs/toolkit';
 import userReducer, {
   getUser,
   loginUser,
@@ -22,6 +23,8 @@ describe('userSlice', () => {
     password: '11111'
   };
 
+  const mockState = (action: Action) => userReducer(initialState, action);
+
   it('Получить начальное состояние', () => {
     expect(userReducer(undefined, { type: 'UNKNOWN_ACTION' })).toEqual(
       initialState
@@ -30,7 +33,7 @@ describe('userSlice', () => {
 
   it('Индефицировать пользователя', () => {
     const action = { type: getUser.pending.type };
-    const state = userReducer(initialState, action);
+    const state = mockState(action);
     expect(state.loading).toBe(true);
     expect(state.error).toBe(null);
   });
@@ -40,7 +43,7 @@ describe('userSlice', () => {
       type: getUser.rejected.type,
       error: { message: 'Error fetching' }
     };
-    const state = userReducer(initialState, action);
+    const state = mockState(action);
     expect(state).toEqual({
       ...initialState,
       isAuthChecked: true,
@@ -53,13 +56,13 @@ describe('userSlice', () => {
       type: getUser.fulfilled.type,
       payload: response
     };
-    const state = userReducer(initialState, action);
+    const state = mockState(action);
 
     expect(state).toEqual({
       ...initialState,
       user: {
-        email: 'TEST@gmail.com',
-        name: 'TEST'
+        email: data.email,
+        name: data.name
       },
       isAuthChecked: true,
       isAuth: true,
@@ -70,10 +73,7 @@ describe('userSlice', () => {
 
   it('Вход в аккаунт', () => {
     const { email, password } = data;
-    const state = userReducer(
-      initialState,
-      loginUser.pending('', { email, password })
-    );
+    const state = mockState(loginUser.pending('', { email, password }));
     expect(state).toEqual({
       ...initialState,
       loading: true,
@@ -86,7 +86,7 @@ describe('userSlice', () => {
       type: loginUser.rejected.type,
       error: { message: 'Error' }
     };
-    const state = userReducer(initialState, action);
+    const state = mockState(action);
     expect(state).toEqual({
       ...initialState,
       isAuthChecked: true,
@@ -99,7 +99,7 @@ describe('userSlice', () => {
       type: loginUser.fulfilled.type,
       payload: data
     };
-    const state = userReducer(initialState, action);
+    const state = mockState(action);
     expect(state).toEqual({
       ...initialState,
       isAuthChecked: true,
@@ -107,9 +107,9 @@ describe('userSlice', () => {
       loading: false,
       error: null,
       user: {
-        name: 'TEST',
-        email: 'TEST@gmail.com',
-        password: '11111'
+        email: data.email,
+        name: data.name,
+        password: data.password
       }
     });
   });
@@ -119,8 +119,8 @@ describe('userSlice', () => {
       ...initialState,
       isAuthChecked: false,
       user: {
-        name: 'TEST',
-        email: 'TEST@gmail.com'
+        email: data.email,
+        name: data.name
       }
     };
     const action = logout.fulfilled({ success: true }, '', undefined);
@@ -133,7 +133,7 @@ describe('userSlice', () => {
     const action = {
       type: updateUser.pending.type
     };
-    const state = userReducer(initialState, action);
+    const state = mockState(action);
     expect(state).toEqual({
       ...initialState,
       loading: true,
@@ -146,7 +146,7 @@ describe('userSlice', () => {
       type: updateUser.rejected.type,
       error: { message: 'Error fetching' }
     };
-    const state = userReducer(initialState, action);
+    const state = mockState(action);
     expect(state.loading).toBe(false);
     expect(state.error).toBe('Error fetching');
     expect(state.user).toBeNull();
@@ -157,7 +157,7 @@ describe('userSlice', () => {
       type: updateUser.fulfilled.type,
       payload: response
     };
-    const state = userReducer(initialState, action);
+    const state = mockState(action);
     expect(state).toEqual({
       ...initialState,
       isAuthChecked: true,
@@ -165,8 +165,8 @@ describe('userSlice', () => {
       error: null,
       loading: false,
       user: {
-        name: 'TEST',
-        email: 'TEST@gmail.com'
+        email: data.email,
+        name: data.name
       }
     });
   });
