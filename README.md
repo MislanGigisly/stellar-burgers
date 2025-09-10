@@ -2,7 +2,7 @@
 
 [Макет](<https://www.figma.com/file/vIywAvqfkOIRWGOkfOnReY/React-Fullstack_-Проектные-задачи-(3-месяца)_external_link?type=design&node-id=0-1&mode=design>)
 
-## Stak: 
+## Stack: 
 * React 18 + TypeScript
 * Redux Toolkit + React Router v6
 * Webpack + Babel
@@ -18,16 +18,3 @@
 2. Добавить переменную `BURGER_API_URL` в файл .env, пример лежит в файле env.example
 3. Запустить проект `npm run start`
 
-
-
-1. Разверните проект и ознакомьтесь с кодом. Все необходимые вам компоненты уже созданы и лежат в папке `src/components`
-
-2. Настройте роутинг.
-
-3. Напишите функционал запросов данных с сервера, используя `Redux` и глобальный `store`. Сами "ручки" уже прописаны и лежат в `utils/burger-api.ts`
-
-4. Настройте авторизацию и создайте защищённые роуты.
-
-## Важно:
-
-Для корректной работы запросов к серверу необходимо добавить переменную BURGER_API_URL в окружение. Сама ссылка находится в файле `.env.example`.
